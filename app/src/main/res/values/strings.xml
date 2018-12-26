@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DummyReminder</string>
+    <string name="add_group">Add Group</string>
+</resources>
