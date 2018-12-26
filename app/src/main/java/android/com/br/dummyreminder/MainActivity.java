@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.tb_button_new:
                 Toast.makeText(this, "New Group", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this, GroupDetail.class));
+
                 return true;
 
             default:

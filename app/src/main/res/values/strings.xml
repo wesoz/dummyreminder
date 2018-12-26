@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">DummyReminder</string>
     <string name="add_group">Add Group</string>
+    <string name="name">name</string>
+    <string name="Name">Name</string>
+    <string name="Save">Save</string>
 </resources>
