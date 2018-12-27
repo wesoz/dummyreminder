@@ -1,5 +1,9 @@
 package android.com.br.dummyreminder;
 
+import android.com.br.dummyreminder.adapter.GroupAdapter;
+import android.com.br.dummyreminder.database.DBHelper;
+import android.com.br.dummyreminder.database.GroupDAO;
+import android.com.br.dummyreminder.to.ObjectTO;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,11 +28,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+       // DBHelper db = new DBHelper(this);
+
         Toolbar mainToolBar = findViewById(R.id.mainToolBar);
 
         setSupportActionBar(mainToolBar);
 
-        setupListView();
+        this.setupListView();
     }
 
     @Override
@@ -55,12 +61,21 @@ public class MainActivity extends AppCompatActivity {
     private void setupListView() {
         ListView lstGroups = findViewById(R.id.lstGroups);
 
+        GroupDAO dao = new GroupDAO(getBaseContext());
+
+        List<ObjectTO> groups = dao.select();
+        dao.close();
+
+        GroupAdapter adapter = new GroupAdapter(this, groups);
+
+        /*
         List<String> items = new ArrayList<>();
         items.add("Med");
         items.add("Work");
         items.add("Others");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
+*/
 
         lstGroups.setAdapter(adapter);
 

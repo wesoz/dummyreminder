@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <item
-        android:id="@+id/tb_button_add"
-        android:title="@string/Add"
-        app:showAsAction="withText"></item>
-
     <item
         android:id="@+id/tb_button_save"
         android:title="@string/Save"
         app:showAsAction="withText"></item>
 
+    <item
+        android:id="@+id/tb_button_cancel"
+        android:title="@string/Cancel"
+        app:showAsAction="withText"></item>
 </menu>
