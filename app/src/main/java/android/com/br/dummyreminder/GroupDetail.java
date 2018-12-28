@@ -1,7 +1,9 @@
 package android.com.br.dummyreminder;
 
 import android.com.br.dummyreminder.adapter.GroupAdapter;
+import android.com.br.dummyreminder.adapter.ItemAdapter;
 import android.com.br.dummyreminder.database.GroupDAO;
+import android.com.br.dummyreminder.database.ItemDAO;
 import android.com.br.dummyreminder.to.Group;
 import android.com.br.dummyreminder.to.ObjectTO;
 import android.content.Intent;
@@ -20,6 +22,8 @@ import java.util.List;
 
 public class GroupDetail extends AppCompatActivity {
 
+    Group group;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,16 +32,27 @@ public class GroupDetail extends AppCompatActivity {
         Toolbar mainToolBar = findViewById(R.id.group_detail_toolbar);
         setSupportActionBar(mainToolBar);
 
+        Intent intent = getIntent();
+        this.group = (Group) intent.getSerializableExtra("group");
+
+        if (this.group != null)
+        {
+            TextView txtName = findViewById(R.id.txtName_Group);
+            TextView txtDesctiption = findViewById(R.id.txtDescription_Group);
+            txtName.setText(this.group.getName());
+            txtDesctiption.setText(this.group.getDescription());
+        }
+
         this.setupListView();
     }
 
     private void setupListView() {
         ListView lstGroupItems = findViewById(R.id.lstGroupItems);
 
-        GroupDAO dao = new GroupDAO(getBaseContext());
-        List<ObjectTO> groups = dao.select();
+        ItemDAO dao = new ItemDAO(getBaseContext());
+        List<ObjectTO> items = dao.select();
 
-        GroupAdapter adapter = new GroupAdapter(this, groups);
+        ItemAdapter adapter = new ItemAdapter(this, items);
 
         lstGroupItems.setAdapter(adapter);
     }
@@ -63,11 +78,17 @@ public class GroupDetail extends AppCompatActivity {
                 TextView txtName = findViewById(R.id.txtName_Group);
                 TextView txtDesctiption = findViewById(R.id.txtDescription_Group);
 
-                Group group = new Group(0, txtName.getText().toString(), txtDesctiption.getText().toString(), true);
-
                 GroupDAO dao = new GroupDAO(getBaseContext());
 
-                dao.insert(group);
+                if (this.group == null) {
+                    Group group = new Group(0, txtName.getText().toString(), txtDesctiption.getText().toString(), true);
+                    dao.insert(group);
+                } else {
+                    this.group.setName(txtName.getText().toString());
+                    this.group.setDescription(txtDesctiption.getText().toString());
+                    this.group.setActive(true);
+                    dao.update(this.group);
+                }
                 dao.close();
                 this.finish();
 

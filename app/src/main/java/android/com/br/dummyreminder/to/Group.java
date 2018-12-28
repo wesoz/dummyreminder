@@ -1,6 +1,8 @@
 package android.com.br.dummyreminder.to;
 
-public class Group implements ObjectTO {
+import java.io.Serializable;
+
+public class Group implements ObjectTO, Serializable {
 
     private int ID;
     private String name;

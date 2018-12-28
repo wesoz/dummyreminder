@@ -33,15 +33,32 @@ public class GroupDAO implements ObjectDAO {
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        long newRowID = db.insert(DBContract.Item.TABLE_NAME, null, values);
+        long newRowID = db.insertOrThrow(DBContract.Group.TABLE_NAME, null, values);
         db.close();
 
         return newRowID;
     }
 
     @Override
-    public void update(ObjectTO object) {
+    public int update(ObjectTO object) {
+        Group group = (Group) object;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(DBContract.Group.NAME, group.getName());
+        values.put(DBContract.Group.DESCRIPTION, group.getDescription());
+        values.put(DBContract.Group.IS_ACTIVE, group.isActive());
+
+        String selection = DBContract.Group.ID + " = ?";
+        String[] selectionArgs = { String.valueOf(group.getID()) };
+
+        int count = db.update(
+                DBContract.Group.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+
+        return count;
     }
 
     @Override
@@ -61,8 +78,7 @@ public class GroupDAO implements ObjectDAO {
                 null,
                 null);
 
-        if (cursor.getColumnCount() > 0) {
-            cursor.moveToFirst();
+        if (cursor.getCount() > 0) {
             while(cursor.moveToNext()) {
                 Group object = new Group();
 

@@ -44,8 +44,30 @@ public class ItemDAO implements ObjectDAO {
     }
 
     @Override
-    public void update(ObjectTO object) {
+    public int update(ObjectTO object) {
+        Item item = (Item) object;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(DBContract.Item.NAME, item.getName());
+        values.put(DBContract.Item.DESCRIPTION, item.getDescription());
+        values.put(DBContract.Item.DATE, item.getDate());
+        values.put(DBContract.Item.WEEKDAYS, item.getWeekdays());
+        values.put(DBContract.Item.HOUR, item.getHour());
+        values.put(DBContract.Item.MINUTE, item.getMinute());
+        values.put(DBContract.Item.IS_ACTIVE, item.isActive());
+        values.put(DBContract.Item.IS_TRIGGERED, item.isTriggered());
+
+        String selection = DBContract.Item.ID + " = ?";
+        String[] selectionArgs = { String.valueOf(item.getID()) };
+
+        int count = db.update(
+                DBContract.Item.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+
+        return count;
     }
 
     @Override
