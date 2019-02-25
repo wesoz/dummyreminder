@@ -5,6 +5,7 @@ import android.com.br.dummyreminder.adapter.ItemAdapter;
 import android.com.br.dummyreminder.database.GroupDAO;
 import android.com.br.dummyreminder.database.ItemDAO;
 import android.com.br.dummyreminder.to.Group;
+import android.com.br.dummyreminder.to.Item;
 import android.com.br.dummyreminder.to.ObjectTO;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -42,6 +45,11 @@ public class GroupDetail extends AppCompatActivity {
             txtName.setText(this.group.getName());
             txtDesctiption.setText(this.group.getDescription());
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         this.setupListView();
     }
@@ -49,12 +57,24 @@ public class GroupDetail extends AppCompatActivity {
     private void setupListView() {
         ListView lstGroupItems = findViewById(R.id.lstGroupItems);
 
-        ItemDAO dao = new ItemDAO(getBaseContext());
-        List<ObjectTO> items = dao.select();
+        GroupDAO dao = new GroupDAO(getBaseContext());
+        final List<ObjectTO> items = dao.getItems(this.group.getID());
 
         ItemAdapter adapter = new ItemAdapter(this, items);
 
         lstGroupItems.setAdapter(adapter);
+
+        lstGroupItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View view, int position, long id) {
+                Item itemTO = (Item)items.get(position);
+
+                Intent intent = new Intent(GroupDetail.this, ItemDetail.class);
+                intent.putExtra("groupID", GroupDetail.this.group.getID());
+                intent.putExtra("item", itemTO);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -68,8 +88,9 @@ public class GroupDetail extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.tb_button_add:
-                Toast.makeText(this, "New", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(GroupDetail.this, ItemDetail.class));
+                Intent intent = new Intent(GroupDetail.this, ItemDetail.class);
+                intent.putExtra("groupID", this.group.getID());
+                startActivity(intent);
 
                 return true;
 

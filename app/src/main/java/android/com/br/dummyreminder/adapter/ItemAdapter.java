@@ -35,7 +35,7 @@ public class ItemAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return ((Group)this.items.get(position)).getID();
+        return ((Item)this.items.get(position)).getID();
     }
 
     @Override
@@ -46,8 +46,10 @@ public class ItemAdapter extends BaseAdapter {
         LayoutInflater inflater = LayoutInflater.from(this.context);
         View view = inflater.inflate(R.layout.list_item, null);
 
+        String itemTime =  item.getHour() + ":" + item.getMinute();
+
         ((TextView) view.findViewById(R.id.item_name)).setText(item.getName());
-        ((TextView) view.findViewById(R.id.item_detail)).setText(item.getName() + " " + position);
+        ((TextView) view.findViewById(R.id.item_detail)).setText(item.getDescription() + " - " + itemTime);
 
         return view;
     }

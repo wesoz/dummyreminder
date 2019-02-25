@@ -6,4 +6,6 @@
     <string name="Add">Add</string>
     <string name="Cancel">Cancel</string>
     <string name="Description">Description</string>
+    <string name="ItemActiveSwitch">On</string>
+    <string name="ItemInactiveSwitch">Off</string>
 </resources>

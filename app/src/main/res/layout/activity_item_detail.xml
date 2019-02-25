@@ -17,9 +17,89 @@
         android:theme="@style/ThemeOverlay.AppCompat.Light"
         app:popupTheme="@style/Theme.AppCompat.Light"></android.support.v7.widget.Toolbar>
 
+    <EditText
+        android:id="@+id/txtName_Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:hint="@string/Name"/>
+
+    <EditText
+        android:id="@+id/txtDescription_Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/Description"/>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <CheckBox
+            android:id="@+id/sunday_Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="S"/>
+        <CheckBox
+            android:id="@+id/monday_Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="M"/>
+        <CheckBox
+            android:id="@+id/tuesday_Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="T"/>
+        <CheckBox
+            android:id="@+id/wednesday_Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="W"/>
+        <CheckBox
+            android:id="@+id/thursday_Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="T"/>
+        <CheckBox
+            android:id="@+id/friday_Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="F"/>
+        <CheckBox
+            android:id="@+id/saturday_Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="S"/>
+
+        <Switch
+            android:id="@+id/swActive_Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:switchPadding="5dp"
+            android:layout_marginLeft="15dp"
+            android:checked="true"
+            android:text="@string/ItemActiveSwitch"
+            />
+
+    </LinearLayout>
+
     <TimePicker
+        android:id="@+id/timePIcker_Item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:timePickerMode="clock" ></TimePicker>
 
 </LinearLayout>

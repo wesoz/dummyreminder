@@ -1,6 +1,7 @@
 package android.com.br.dummyreminder.adapter;
 
 import android.com.br.dummyreminder.R;
+import android.com.br.dummyreminder.database.GroupDAO;
 import android.com.br.dummyreminder.to.Group;
 import android.com.br.dummyreminder.to.ObjectTO;
 import android.content.Context;
@@ -42,11 +43,14 @@ public class GroupAdapter extends BaseAdapter {
 
         Group group = (Group) this.groups.get(position);
 
+        GroupDAO dao = new GroupDAO(this.context);
+        int itemCount = dao.getItemCount(group.getID());
+
         LayoutInflater inflater = LayoutInflater.from(this.context);
         View view = inflater.inflate(R.layout.list_item, null);
 
         ((TextView) view.findViewById(R.id.item_name)).setText(group.getName());
-        ((TextView) view.findViewById(R.id.item_detail)).setText(group.getName() + " " + position);
+        ((TextView) view.findViewById(R.id.item_detail)).setText(group.getDescription() + " - " + itemCount + " items.");
 
         return view;
     }
