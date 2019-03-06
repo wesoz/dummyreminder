@@ -6,4 +6,10 @@
         android:icon="@drawable/button_add_icon"
         android:title="@string/add_group"
         app:showAsAction="withText"></item>
+
+    <item
+        android:id="@+id/tb_button_test"
+        android:icon="@drawable/button_add_icon"
+        android:title="Test"
+        app:showAsAction="withText"></item>
 </menu>

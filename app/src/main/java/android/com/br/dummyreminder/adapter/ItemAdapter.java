@@ -1,6 +1,7 @@
 package android.com.br.dummyreminder.adapter;
 
 import android.com.br.dummyreminder.R;
+import android.com.br.dummyreminder.database.ItemDAO;
 import android.com.br.dummyreminder.to.Group;
 import android.com.br.dummyreminder.to.Item;
 import android.com.br.dummyreminder.to.ObjectTO;
@@ -9,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.List;
@@ -41,15 +44,26 @@ public class ItemAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Item item = (Item) this.items.get(position);
+        final Item item = (Item) this.items.get(position);
 
         LayoutInflater inflater = LayoutInflater.from(this.context);
-        View view = inflater.inflate(R.layout.list_item, null);
+        View view = inflater.inflate(R.layout.item_list_item, null);
 
         String itemTime =  item.getHour() + ":" + item.getMinute();
 
         ((TextView) view.findViewById(R.id.item_name)).setText(item.getName());
         ((TextView) view.findViewById(R.id.item_detail)).setText(item.getDescription() + " - " + itemTime);
+        Switch swActive = ((Switch) view.findViewById(R.id.item_swActive));
+        swActive.setChecked(item.isActive());
+        swActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                item.setActive(isChecked);
+                ItemDAO dao = new ItemDAO(ItemAdapter.this.context);
+                dao.update(item);
+                dao.close();
+            }
+        });
 
         return view;
     }

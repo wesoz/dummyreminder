@@ -51,7 +51,9 @@ public class GroupDetail extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        this.setupListView();
+        if (this.group != null) {
+            this.setupListView();
+        }
     }
 
     private void setupListView() {

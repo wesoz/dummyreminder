@@ -6,6 +6,9 @@ import android.com.br.dummyreminder.database.GroupDAO;
 import android.com.br.dummyreminder.to.Group;
 import android.com.br.dummyreminder.to.ObjectTO;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -54,7 +57,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, GroupDetail.class));
 
                 return true;
+            case R.id.tb_button_test:
 
+                try {
+                    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+                    Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                    r.play();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
