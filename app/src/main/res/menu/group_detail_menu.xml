@@ -12,4 +12,9 @@
         android:title="@string/Save"
         app:showAsAction="withText"></item>
 
+    <item
+        android:id="@+id/tb_button_edit_group"
+        android:title="@string/EditGroup"
+        app:showAsAction="withText"></item>
+
 </menu>

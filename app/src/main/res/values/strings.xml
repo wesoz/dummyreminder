@@ -10,4 +10,5 @@
     <string name="ItemActiveSwitch">On</string>
     <string name="ItemInactiveSwitch">Off</string>
     <string name="NewGroup">New Group</string>
+    <string name="EditGroup">Edit Group</string>
 </resources>
