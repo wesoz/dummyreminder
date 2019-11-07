@@ -50,7 +50,6 @@ public class GroupAdapter extends BaseAdapter {
         View view = inflater.inflate(R.layout.list_item, null);
 
         ((TextView) view.findViewById(R.id.item_name)).setText(group.getName());
-        ((TextView) view.findViewById(R.id.item_detail)).setText(group.getDescription() + " - " + itemCount + " items.");
 
         return view;
     }

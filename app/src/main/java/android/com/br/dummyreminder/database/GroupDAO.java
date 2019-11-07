@@ -29,7 +29,6 @@ public class GroupDAO implements ObjectDAO {
         Group group = (Group)object;
         ContentValues values = new ContentValues();
         values.put(DBContract.Group.NAME, group.getName());
-        values.put(DBContract.Group.DESCRIPTION, group.getDescription());
         values.put(DBContract.Group.IS_ACTIVE, group.isActive());
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -47,7 +46,6 @@ public class GroupDAO implements ObjectDAO {
 
         ContentValues values = new ContentValues();
         values.put(DBContract.Group.NAME, group.getName());
-        values.put(DBContract.Group.DESCRIPTION, group.getDescription());
         values.put(DBContract.Group.IS_ACTIVE, group.isActive());
 
         String selection = DBContract.Group.ID + " = ?";
@@ -85,7 +83,6 @@ public class GroupDAO implements ObjectDAO {
 
                 object.setID(cursor.getInt(cursor.getColumnIndex(DBContract.Group.ID)));
                 object.setName(cursor.getString(cursor.getColumnIndex(DBContract.Group.NAME)));
-                object.setDescription(cursor.getString(cursor.getColumnIndex(DBContract.Group.DESCRIPTION)));
                 object.setActive(cursor.getInt(cursor.getColumnIndex(DBContract.Group.IS_ACTIVE)) != 0);
 
                 objects.add(object);
@@ -145,7 +142,6 @@ public class GroupDAO implements ObjectDAO {
                 object.setID(cursor.getInt(cursor.getColumnIndex(DBContract.Item.ID)));
                 object.setGroupID(cursor.getInt(cursor.getColumnIndex(DBContract.Item.ID_GROUP)));
                 object.setName(cursor.getString(cursor.getColumnIndex(DBContract.Item.NAME)));
-                object.setDescription(cursor.getString(cursor.getColumnIndex(DBContract.Item.DESCRIPTION)));
                 object.setDate(cursor.getString(cursor.getColumnIndex(DBContract.Item.DATE)));
                 object.setWeekdays(cursor.getInt(cursor.getColumnIndex(DBContract.Item.WEEKDAYS)));
                 object.setHour(cursor.getInt(cursor.getColumnIndex(DBContract.Item.HOUR)));

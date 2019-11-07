@@ -28,7 +28,6 @@ public class ItemDAO implements ObjectDAO {
         ContentValues values = new ContentValues();
         values.put(DBContract.Item.ID_GROUP, item.getGroupID());
         values.put(DBContract.Item.NAME, item.getName());
-        values.put(DBContract.Item.DESCRIPTION, item.getDescription());
         values.put(DBContract.Item.DATE, item.getDate());
         values.put(DBContract.Item.WEEKDAYS, item.getWeekdays());
         values.put(DBContract.Item.HOUR, item.getHour());
@@ -50,7 +49,6 @@ public class ItemDAO implements ObjectDAO {
 
         ContentValues values = new ContentValues();
         values.put(DBContract.Item.NAME, item.getName());
-        values.put(DBContract.Item.DESCRIPTION, item.getDescription());
         values.put(DBContract.Item.DATE, item.getDate());
         values.put(DBContract.Item.WEEKDAYS, item.getWeekdays());
         values.put(DBContract.Item.HOUR, item.getHour());
@@ -94,7 +92,6 @@ public class ItemDAO implements ObjectDAO {
                 object.setID(cursor.getInt(cursor.getColumnIndex(DBContract.Item.ID)));
                 object.setGroupID(cursor.getInt(cursor.getColumnIndex(DBContract.Item.ID_GROUP)));
                 object.setName(cursor.getString(cursor.getColumnIndex(DBContract.Item.NAME)));
-                object.setDescription(cursor.getString(cursor.getColumnIndex(DBContract.Item.DESCRIPTION)));
                 object.setDate(cursor.getString(cursor.getColumnIndex(DBContract.Item.DATE)));
                 object.setWeekdays(cursor.getInt(cursor.getColumnIndex(DBContract.Item.WEEKDAYS)));
                 object.setHour(cursor.getInt(cursor.getColumnIndex(DBContract.Item.HOUR)));

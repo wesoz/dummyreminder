@@ -24,14 +24,6 @@
         android:textSize="18sp"
         android:hint="@string/Name"/>
 
-    <EditText
-        android:id="@+id/txtDescription_Group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/Description"/>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

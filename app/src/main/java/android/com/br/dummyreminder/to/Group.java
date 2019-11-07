@@ -6,15 +6,13 @@ public class Group implements ObjectTO, Serializable {
 
     private int ID;
     private String name;
-    private String description;
     private boolean isActive;
 
     public Group() {}
 
-    public Group(int ID, String name, String description, boolean isActive) {
+    public Group(int ID, String name, boolean isActive) {
         this.ID = ID;
-        this.name = name;
-        this.description = description;
+        this.name = name;;
         this.isActive = isActive;
     }
 
@@ -32,14 +30,6 @@ public class Group implements ObjectTO, Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public boolean isActive() {

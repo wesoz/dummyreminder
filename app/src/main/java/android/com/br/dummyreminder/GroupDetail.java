@@ -1,12 +1,9 @@
 package android.com.br.dummyreminder;
 
-import android.com.br.dummyreminder.adapter.GroupAdapter;
-import android.com.br.dummyreminder.adapter.ItemAdapter;
-import android.com.br.dummyreminder.database.GroupDAO;
-import android.com.br.dummyreminder.database.ItemDAO;
+import android.com.br.dummyreminder.activitystates.ActivityState;
+import android.com.br.dummyreminder.activitystates.GroupViewState;
+import android.com.br.dummyreminder.activitystates.GroupNewState;
 import android.com.br.dummyreminder.to.Group;
-import android.com.br.dummyreminder.to.Item;
-import android.com.br.dummyreminder.to.ObjectTO;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,18 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.List;
 
 public class GroupDetail extends AppCompatActivity {
 
-    Group group;
+    ActivityState _groupState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,56 +22,36 @@ public class GroupDetail extends AppCompatActivity {
         setContentView(R.layout.activity_group_detail);
 
         Toolbar mainToolBar = findViewById(R.id.group_detail_toolbar);
+
         setSupportActionBar(mainToolBar);
 
         Intent intent = getIntent();
-        this.group = (Group) intent.getSerializableExtra("group");
+        Group group = (Group) intent.getSerializableExtra("group");
 
-        if (this.group != null)
+        if (group != null)
         {
-            TextView txtName = findViewById(R.id.txtName_Group);
-            TextView txtDesctiption = findViewById(R.id.txtDescription_Group);
-            txtName.setText(this.group.getName());
-            txtDesctiption.setText(this.group.getDescription());
+            this._groupState = new GroupViewState(this, group);
+
+        } else {
+            this._groupState = new GroupNewState(this);
+            mainToolBar.setTitle(R.string.NewGroup);
         }
+
+        this._groupState.onCreate();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        if (this.group != null) {
-            this.setupListView();
-        }
-    }
-
-    private void setupListView() {
-        ListView lstGroupItems = findViewById(R.id.lstGroupItems);
-
-        GroupDAO dao = new GroupDAO(getBaseContext());
-        final List<ObjectTO> items = dao.getItems(this.group.getID());
-
-        ItemAdapter adapter = new ItemAdapter(this, items);
-
-        lstGroupItems.setAdapter(adapter);
-
-        lstGroupItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView parent, View view, int position, long id) {
-                Item itemTO = (Item)items.get(position);
-
-                Intent intent = new Intent(GroupDetail.this, ItemDetail.class);
-                intent.putExtra("groupID", GroupDetail.this.group.getID());
-                intent.putExtra("item", itemTO);
-                startActivity(intent);
-            }
-        });
+        this._groupState.onResume();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.group_detail_menu, menu);
+        this._groupState.onCreateOptionsMenu(menu);
         return true;
     }
 
@@ -90,29 +59,13 @@ public class GroupDetail extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.tb_button_add:
-                Intent intent = new Intent(GroupDetail.this, ItemDetail.class);
-                intent.putExtra("groupID", this.group.getID());
-                startActivity(intent);
+                this._groupState.add();
 
                 return true;
 
             case R.id.tb_button_save:
-                Toast.makeText(this, "Save", Toast.LENGTH_SHORT).show();
-                TextView txtName = findViewById(R.id.txtName_Group);
-                TextView txtDesctiption = findViewById(R.id.txtDescription_Group);
+                this._groupState.save();
 
-                GroupDAO dao = new GroupDAO(getBaseContext());
-
-                if (this.group == null) {
-                    Group group = new Group(0, txtName.getText().toString(), txtDesctiption.getText().toString(), true);
-                    dao.insert(group);
-                } else {
-                    this.group.setName(txtName.getText().toString());
-                    this.group.setDescription(txtDesctiption.getText().toString());
-                    this.group.setActive(true);
-                    dao.update(this.group);
-                }
-                dao.close();
                 this.finish();
 
                 return true;

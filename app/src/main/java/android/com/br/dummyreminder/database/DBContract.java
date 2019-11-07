@@ -11,7 +11,6 @@ public final class DBContract {
         public static final String ID = "idItem";
         public static final String ID_GROUP = "idGroup";
         public static final String NAME = "nmItem";
-        public static final String DESCRIPTION = "dsItem";
         public static final String DATE = "vlDate";
         public static final String WEEKDAYS = "vlWeekdays";
         public static final String HOUR = "nrHour";
@@ -25,7 +24,6 @@ public final class DBContract {
                             ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                             ID_GROUP + " INTEGER, " +
                             NAME + " TEXT, " +
-                            DESCRIPTION + " TEXT, " +
                             DATE + " TEXT, " +
                             WEEKDAYS + " INTEGER, " +
                             HOUR + " INTEGER, " +
@@ -42,7 +40,6 @@ public final class DBContract {
                 ID,
                 ID_GROUP,
                 NAME,
-                DESCRIPTION,
                 DATE,
                 WEEKDAYS,
                 HOUR,
@@ -59,7 +56,6 @@ public final class DBContract {
         public static final String TABLE_NAME = "tbGroup";
         public static final String ID = "idGroup";
         public static final String NAME = "nmGroup";
-        public static final String DESCRIPTION = "dsGroup";
         public static final String IS_ACTIVE = "flActive";
 
         public static String getCreateScript() {
@@ -67,7 +63,6 @@ public final class DBContract {
                     "CREATE TABLE " + TABLE_NAME + " (" +
                             ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                             NAME + " TEXT, " +
-                            DESCRIPTION + " TEXT, " +
                             IS_ACTIVE + " INTEGER );";
 
            return SQL_CREATE;
@@ -78,7 +73,6 @@ public final class DBContract {
             String[] columns = {
                     ID,
                     NAME,
-                    DESCRIPTION,
                     IS_ACTIVE
             };
 

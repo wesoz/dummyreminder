@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/tb_button_add"
-        android:title="@string/Add"
+        android:title="@string/AddItem"
         app:showAsAction="withText"></item>
 
     <item
