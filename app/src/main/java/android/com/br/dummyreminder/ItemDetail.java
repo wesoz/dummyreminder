@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 public class ItemDetail extends AppCompatActivity {
 
-    private int _groupID;
+    private long _groupID;
     private Item _item;
 
     @Override
@@ -27,7 +27,7 @@ public class ItemDetail extends AppCompatActivity {
         setContentView(R.layout.activity_item_detail);
 
         Intent intent = getIntent();
-        this._groupID = (int)intent.getSerializableExtra("groupID");
+        this._groupID = (long)intent.getSerializableExtra("groupID");
         this._item = (Item) intent.getSerializableExtra("item");
 
         Switch swActive = findViewById(R.id.swActive_Item);
@@ -45,11 +45,9 @@ public class ItemDetail extends AppCompatActivity {
 
         if (this._item != null) {
             TextView txtName = findViewById(R.id.txtName_Item);
-            TextView txtDescription = findViewById(R.id.txtDescription_Item);
             TimePicker timePicker = findViewById(R.id.timePIcker_Item);
 
             txtName.setText(this._item.getName());
-            txtDescription.setText(this._item.getDescription());
             timePicker.setHour(this._item.getHour());
             timePicker.setMinute(this._item.getMinute());
             swActive.setChecked(this._item.isActive());
@@ -134,7 +132,6 @@ public class ItemDetail extends AppCompatActivity {
                 Toast.makeText(this, "Save", Toast.LENGTH_SHORT).show();
 
                 TextView txtName = findViewById(R.id.txtName_Item);
-                TextView txtDescription = findViewById(R.id.txtDescription_Item);
                 Switch swActive = findViewById(R.id.swActive_Item);
                 TimePicker timePicker = findViewById(R.id.timePIcker_Item);
 
@@ -143,7 +140,6 @@ public class ItemDetail extends AppCompatActivity {
                 Item itemTO = new Item();
                 itemTO.setGroupID(this._groupID);
                 itemTO.setName(txtName.getText().toString());
-                itemTO.setDescription(txtDescription.getText().toString());
                 itemTO.setHour(timePicker.getHour());
                 itemTO.setMinute(timePicker.getMinute());
                 itemTO.setActive(swActive.isChecked());

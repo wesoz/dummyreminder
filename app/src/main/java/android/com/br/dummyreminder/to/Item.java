@@ -7,9 +7,8 @@ public class Item implements ObjectTO, Serializable {
     public Item() { }
 
     private int ID;
-    private int groupID;
+    private long groupID;
     private String name;
-    private String description;
     private String date;
     private int weekdays;
     private int hour;
@@ -17,12 +16,11 @@ public class Item implements ObjectTO, Serializable {
     private boolean isActive;
     private boolean isTriggered;
 
-    public Item(int ID, int groupID, String name, String description, String date, int weekdays,
+    public Item(int ID, int groupID, String name, String date, int weekdays,
                  int hour, int minute, boolean isActive, boolean isTriggered) {
         this.ID = ID;
         this.groupID = groupID;
         this.name = name;
-        this.description = description;
         this.date = date;
         this.weekdays = weekdays;
         this.hour = hour;
@@ -39,11 +37,11 @@ public class Item implements ObjectTO, Serializable {
         this.ID = ID;
     }
 
-    public int getGroupID() {
+    public long getGroupID() {
         return groupID;
     }
 
-    public void setGroupID(int groupID) {
+    public void setGroupID(long groupID) {
         this.groupID = groupID;
     }
 
@@ -53,14 +51,6 @@ public class Item implements ObjectTO, Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getDate() {

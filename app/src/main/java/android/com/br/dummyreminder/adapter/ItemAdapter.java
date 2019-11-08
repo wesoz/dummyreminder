@@ -52,8 +52,8 @@ public class ItemAdapter extends BaseAdapter {
         String itemTime =  item.getHour() + ":" + item.getMinute();
 
         ((TextView) view.findViewById(R.id.item_name)).setText(item.getName());
-        ((TextView) view.findViewById(R.id.item_detail)).setText(item.getDescription() + " - " + itemTime);
-        Switch swActive = ((Switch) view.findViewById(R.id.item_swActive));
+        ((TextView) view.findViewById(R.id.item_detail)).setText(itemTime);
+        Switch swActive = view.findViewById(R.id.item_swActive);
         swActive.setChecked(item.isActive());
         swActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

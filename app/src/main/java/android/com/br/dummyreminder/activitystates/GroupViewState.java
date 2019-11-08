@@ -25,6 +25,7 @@ public class GroupViewState extends GroupState {
     public GroupViewState(Activity context, Group groupTO) {
         super(context);
         super._groupTO = groupTO;
+        this.onCreate();
     }
 
     @Override
@@ -34,8 +35,7 @@ public class GroupViewState extends GroupState {
 
     @Override
     public void onCreate() {
-        Toolbar mainToolBar = super._context.findViewById(R.id.group_detail_toolbar);
-        mainToolBar.setTitle("Group: " + super._groupTO.getName());
+        super._mainToolBar.setTitle("Group: " + super._groupTO.getName());
         super._context.findViewById(R.id.txtName_Group).setVisibility(View.GONE);
     }
 

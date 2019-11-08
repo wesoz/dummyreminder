@@ -5,6 +5,7 @@ import android.com.br.dummyreminder.activitystates.GroupViewState;
 import android.com.br.dummyreminder.activitystates.GroupNewState;
 import android.com.br.dummyreminder.to.Group;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,17 +16,20 @@ import android.view.MenuItem;
 public class GroupDetail extends AppCompatActivity {
 
     ActivityState _groupState;
+    Toolbar _mainToolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_detail);
 
-        Toolbar mainToolBar = findViewById(R.id.group_detail_toolbar);
+        this._mainToolBar = findViewById(R.id.group_detail_toolbar);
+        setSupportActionBar(this._mainToolBar);
 
-        setSupportActionBar(mainToolBar);
+        this.resolveState(getIntent());
+    }
 
-        Intent intent = getIntent();
+    private void resolveState(Intent intent) {
         Group group = (Group) intent.getSerializableExtra("group");
 
         if (group != null)
@@ -34,10 +38,8 @@ public class GroupDetail extends AppCompatActivity {
 
         } else {
             this._groupState = new GroupNewState(this);
-            mainToolBar.setTitle(R.string.NewGroup);
+            this._mainToolBar.setTitle(R.string.NewGroup);
         }
-
-        this._groupState.onCreate();
     }
 
     @Override

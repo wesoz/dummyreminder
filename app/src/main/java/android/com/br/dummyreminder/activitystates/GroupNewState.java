@@ -1,10 +1,12 @@
 package android.com.br.dummyreminder.activitystates;
 
 import android.app.Activity;
+import android.com.br.dummyreminder.ItemDetail;
 import android.com.br.dummyreminder.R;
 import android.com.br.dummyreminder.activitystates.ActivityState;
 import android.com.br.dummyreminder.database.GroupDAO;
 import android.com.br.dummyreminder.to.Group;
+import android.content.Intent;
 import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +21,9 @@ public class GroupNewState extends GroupState {
     public void add() {
         if (this.save()) {
             super.add();
+            Intent intent = new Intent(super._context, ItemDetail.class);
+            intent.putExtra("group", this._groupTO);
+            super._context.setResult(0, intent);
         }
     }
 
@@ -35,14 +40,13 @@ public class GroupNewState extends GroupState {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.findItem(R.id.tb_button_edit_group).setVisible(false);
+        menu.findItem(R.id.tb_button_add).setVisible(false);
         return false;
 
     }
 
     @Override
     public boolean save() {
-        Toast.makeText(super._context, "Save", Toast.LENGTH_SHORT).show();
-
         if (!super.validateFields()) {
             return false;
         }
