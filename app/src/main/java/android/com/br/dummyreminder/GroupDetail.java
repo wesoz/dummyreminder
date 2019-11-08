@@ -64,9 +64,8 @@ public class GroupDetail extends AppCompatActivity {
                 return true;
 
             case R.id.tb_button_save:
-                this._groupState.save();
-
-                this.finish();
+                if (this._groupState.save())
+                    this.finish();
 
                 return true;
 

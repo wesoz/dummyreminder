@@ -19,25 +19,23 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class GroupViewState extends ActivityState {
+public class GroupViewState extends GroupState {
 
-    Group _groupTO;
+
     public GroupViewState(Activity context, Group groupTO) {
         super(context);
-        this._groupTO = groupTO;
+        super._groupTO = groupTO;
     }
 
     @Override
     public void add() {
-        Intent intent = new Intent(super._context, ItemDetail.class);
-        intent.putExtra("groupID", this._groupTO.getID());
-        super._context.startActivity(intent);
+        super.add();
     }
 
     @Override
     public void onCreate() {
         Toolbar mainToolBar = super._context.findViewById(R.id.group_detail_toolbar);
-        mainToolBar.setTitle("Group: " + this._groupTO.getName());
+        mainToolBar.setTitle("Group: " + super._groupTO.getName());
         super._context.findViewById(R.id.txtName_Group).setVisibility(View.GONE);
     }
 
@@ -45,11 +43,12 @@ public class GroupViewState extends ActivityState {
     public void onResume() {
         this.setupListView();
     }
+
     private void setupListView() {
         ListView lstGroupItems = super._context.findViewById(R.id.lstGroupItems);
 
         GroupDAO dao = new GroupDAO(super._context.getBaseContext());
-        final List<ObjectTO> items = dao.getItems(this._groupTO.getID());
+        final List<ObjectTO> items = dao.getItems(super._groupTO.getID());
 
         ItemAdapter adapter = new ItemAdapter(super._context, items);
 
@@ -61,7 +60,7 @@ public class GroupViewState extends ActivityState {
                 Item itemTO = (Item)items.get(position);
 
                 Intent intent = new Intent(GroupViewState.super._context, ItemDetail.class);
-                intent.putExtra("groupID", GroupViewState.this._groupTO.getID());
+                intent.putExtra("groupID", GroupViewState.super._groupTO.getID());
                 intent.putExtra("item", itemTO);
                 GroupViewState.super._context.startActivity(intent);
             }
@@ -74,13 +73,15 @@ public class GroupViewState extends ActivityState {
     }
 
     @Override
-    public void save() {
+    public boolean save() {
         Toast.makeText(super._context, "Save", Toast.LENGTH_SHORT).show();
-        TextView txtName = super._context.findViewById(R.id.txtName_Group);
+        if (!super.validateFields())
+            return false;
 
         GroupDAO dao = new GroupDAO(super._context.getBaseContext());
-        this._groupTO.setName(txtName.getText().toString());
-        this._groupTO.setActive(true);
-        dao.update(this._groupTO);
+        super._groupTO.setName(super._txtName.getText().toString());
+        super._groupTO.setActive(true);
+        dao.update(super._groupTO);
+        return true;
     }
 }

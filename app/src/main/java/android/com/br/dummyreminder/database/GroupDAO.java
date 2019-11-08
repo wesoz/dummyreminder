@@ -94,7 +94,7 @@ public class GroupDAO implements ObjectDAO {
         return objects;
     }
 
-    public int getItemCount(int groupID) {
+    public int getItemCount(long groupID) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         int itemCount = 0;
@@ -116,7 +116,7 @@ public class GroupDAO implements ObjectDAO {
         return itemCount;
     }
 
-    public List<ObjectTO> getItems(int groupID) {
+    public List<ObjectTO> getItems(long groupID) {
 
         List<ObjectTO> objects = new ArrayList<>();
         String[] columns = DBContract.Item.getColumnNames();

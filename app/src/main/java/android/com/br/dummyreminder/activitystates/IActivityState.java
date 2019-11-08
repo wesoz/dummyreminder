@@ -8,5 +8,5 @@ public interface IActivityState {
     void onCreate();
     void onResume();
     boolean onCreateOptionsMenu(Menu menu);
-    void save();
+    boolean save();
 }

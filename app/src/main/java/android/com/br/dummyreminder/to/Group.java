@@ -4,23 +4,23 @@ import java.io.Serializable;
 
 public class Group implements ObjectTO, Serializable {
 
-    private int ID;
+    private long ID;
     private String name;
     private boolean isActive;
 
     public Group() {}
 
-    public Group(int ID, String name, boolean isActive) {
+    public Group(long ID, String name, boolean isActive) {
         this.ID = ID;
         this.name = name;;
         this.isActive = isActive;
     }
 
-    public int getID() {
+    public long getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(long ID) {
         this.ID = ID;
     }
 
