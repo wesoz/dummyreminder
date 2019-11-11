@@ -1,16 +1,16 @@
 package android.com.br.dummyreminder;
 
 import android.com.br.dummyreminder.adapter.GroupAdapter;
-import android.com.br.dummyreminder.database.DBHelper;
 import android.com.br.dummyreminder.database.GroupDAO;
 import android.com.br.dummyreminder.to.Group;
-import android.com.br.dummyreminder.to.ObjectTO;
+import android.com.br.dummyreminder.to.IObjectTO;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,11 +19,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
+
+import com.mongodb.stitch.android.core.Stitch;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<ObjectTO> groups;
+    private List<IObjectTO> groups;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar mainToolBar = findViewById(R.id.mainToolBar);
 
         setSupportActionBar(mainToolBar);
+        Stitch.initializeDefaultAppClient(getResources().getString(R.string.my_app_id));
+
+        Log.d("Mongo", id.toString());
 
     }
 

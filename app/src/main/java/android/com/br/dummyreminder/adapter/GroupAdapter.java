@@ -3,7 +3,7 @@ package android.com.br.dummyreminder.adapter;
 import android.com.br.dummyreminder.R;
 import android.com.br.dummyreminder.database.GroupDAO;
 import android.com.br.dummyreminder.to.Group;
-import android.com.br.dummyreminder.to.ObjectTO;
+import android.com.br.dummyreminder.to.IObjectTO;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +15,10 @@ import java.util.List;
 
 public class GroupAdapter extends BaseAdapter {
 
-    private final List<ObjectTO> groups;
+    private final List<IObjectTO> groups;
     private final Context context;
 
-    public GroupAdapter(Context context, List<ObjectTO> groups) {
+    public GroupAdapter(Context context, List<IObjectTO> groups) {
         this.context = context;
         this.groups = groups;
     }

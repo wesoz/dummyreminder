@@ -2,9 +2,8 @@ package android.com.br.dummyreminder.adapter;
 
 import android.com.br.dummyreminder.R;
 import android.com.br.dummyreminder.database.ItemDAO;
-import android.com.br.dummyreminder.to.Group;
 import android.com.br.dummyreminder.to.Item;
-import android.com.br.dummyreminder.to.ObjectTO;
+import android.com.br.dummyreminder.to.IObjectTO;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +17,10 @@ import java.util.List;
 
 public class ItemAdapter extends BaseAdapter {
 
-    private final List<ObjectTO> items;
+    private final List<IObjectTO> items;
     private final Context context;
 
-    public ItemAdapter(Context context, List<ObjectTO> items) {
+    public ItemAdapter(Context context, List<IObjectTO> items) {
         this.context = context;
         this.items = items;
     }

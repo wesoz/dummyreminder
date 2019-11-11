@@ -1,7 +1,7 @@
 package android.com.br.dummyreminder.database;
 
 import android.com.br.dummyreminder.to.Item;
-import android.com.br.dummyreminder.to.ObjectTO;
+import android.com.br.dummyreminder.to.IObjectTO;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemDAO implements ObjectDAO {
+public class ItemDAO implements IObjectDAO {
 
     private DBHelper dbHelper;
 
@@ -23,7 +23,12 @@ public class ItemDAO implements ObjectDAO {
     }
 
     @Override
-    public long insert(ObjectTO object) {
+    public String getCollectionName() {
+        return null;
+    }
+
+    @Override
+    public long insert(IObjectTO object) {
         Item item = (Item)object;
         ContentValues values = new ContentValues();
         values.put(DBContract.Item.ID_GROUP, item.getGroupID());
@@ -43,7 +48,7 @@ public class ItemDAO implements ObjectDAO {
     }
 
     @Override
-    public int update(ObjectTO object) {
+    public int update(IObjectTO object) {
         Item item = (Item) object;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -69,8 +74,8 @@ public class ItemDAO implements ObjectDAO {
     }
 
     @Override
-    public List<ObjectTO> select() {
-        List<ObjectTO> objects = new ArrayList<>();
+    public List<IObjectTO> select() {
+        List<IObjectTO> objects = new ArrayList<>();
         String[] columns = DBContract.Item.getColumnNames();
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();

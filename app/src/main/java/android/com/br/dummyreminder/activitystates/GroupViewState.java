@@ -7,14 +7,12 @@ import android.com.br.dummyreminder.adapter.ItemAdapter;
 import android.com.br.dummyreminder.database.GroupDAO;
 import android.com.br.dummyreminder.to.Group;
 import android.com.br.dummyreminder.to.Item;
-import android.com.br.dummyreminder.to.ObjectTO;
+import android.com.br.dummyreminder.to.IObjectTO;
 import android.content.Intent;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -48,7 +46,7 @@ public class GroupViewState extends GroupState {
         ListView lstGroupItems = super._context.findViewById(R.id.lstGroupItems);
 
         GroupDAO dao = new GroupDAO(super._context.getBaseContext());
-        final List<ObjectTO> items = dao.getItems(super._groupTO.getID());
+        final List<IObjectTO> items = dao.getItems(super._groupTO.getID());
 
         ItemAdapter adapter = new ItemAdapter(super._context, items);
 

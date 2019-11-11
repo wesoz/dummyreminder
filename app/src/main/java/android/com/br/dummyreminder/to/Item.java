@@ -2,7 +2,7 @@ package android.com.br.dummyreminder.to;
 
 import java.io.Serializable;
 
-public class Item implements ObjectTO, Serializable {
+public class Item implements IObjectTO, Serializable {
 
     public Item() { }
 

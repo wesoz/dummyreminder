@@ -2,170 +2,87 @@ package android.com.br.dummyreminder.database;
 
 import android.com.br.dummyreminder.to.Group;
 import android.com.br.dummyreminder.to.Item;
+import android.com.br.dummyreminder.to.IObjectTO;
 import android.com.br.dummyreminder.to.ObjectTO;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.stitch.android.core.Stitch;
+import com.mongodb.stitch.android.core.StitchAppClient;
+import com.mongodb.stitch.android.services.mongodb.local.LocalMongoDbService;
+
+import org.bson.BsonDocument;
+import org.bson.BsonType;
+import org.bson.BsonValue;
+import org.bson.Document;
+import org.bson.types.ObjectId;
+
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupDAO implements ObjectDAO {
+public class GroupDAO extends ObjectDAO implements IObjectDAO {
 
-    private DBHelper dbHelper;
-
-    public GroupDAO (Context context) {
-        this.dbHelper = new DBHelper(context);
-    }
-
-    public void close() {
-        this.dbHelper.close();
+    public GroupDAO () {
+        super("Group");
     }
 
     @Override
-    public long insert(ObjectTO object) {
+    public String insert(IObjectTO object) {
+        Document newDocument = object.toDocument();
 
-        Group group = (Group)object;
-        ContentValues values = new ContentValues();
-        values.put(DBContract.Group.NAME, group.getName());
-        values.put(DBContract.Group.IS_ACTIVE, group.isActive());
+        super.getCollection().insertOne(newDocument);
+        object.setID(newDocument.getObjectId("_id").toString());
 
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        long newRowID = db.insertOrThrow(DBContract.Group.TABLE_NAME, null, values);
-        db.close();
-
-        return newRowID;
+        return object.getID();
     }
 
     @Override
     public int update(ObjectTO object) {
-        Group group = (Group) object;
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(DBContract.Group.NAME, group.getName());
-        values.put(DBContract.Group.IS_ACTIVE, group.isActive());
+        Document query = new Document();
+        query.append("_id", object.getObjectId().toString());
+        Document update = new Document();
+        update.append("$set", object.toDocument(false));
 
-        String selection = DBContract.Group.ID + " = ?";
-        String[] selectionArgs = { String.valueOf(group.getID()) };
+        super.getCollection().updateOne(query,update);
 
-        int count = db.update(
-                DBContract.Group.TABLE_NAME,
-                values,
-                selection,
-                selectionArgs);
-
-        return count;
+        return 1;
     }
 
     @Override
-    public List<ObjectTO> select() {
+    public List<IObjectTO> select() {
 
-        List<ObjectTO> objects = new ArrayList<>();
-        String[] columns = DBContract.Group.getColumnNames();
-
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        Cursor cursor = db.query(
-                DBContract.Group.TABLE_NAME,
-                columns,
-                null,
-                null,
-                null,
-                null,
-                null);
-
-        if (cursor.getCount() > 0) {
-            while(cursor.moveToNext()) {
-                Group object = new Group();
-
-                object.setID(cursor.getInt(cursor.getColumnIndex(DBContract.Group.ID)));
-                object.setName(cursor.getString(cursor.getColumnIndex(DBContract.Group.NAME)));
-                object.setActive(cursor.getInt(cursor.getColumnIndex(DBContract.Group.IS_ACTIVE)) != 0);
-
-                objects.add(object);
-            }
-        }
-
-        db.close();
+        List<IObjectTO> objects = new ArrayList<>();
 
         return objects;
     }
 
     public int getItemCount(long groupID) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         int itemCount = 0;
-        String queryString = "SELECT COUNT(1) AS itemCount FROM " + DBContract.Item.TABLE_NAME +
-                " WHERE " + DBContract.Item.ID_GROUP + " = ? ";
-
-        String[] whereArgs = new String[] { String.valueOf(groupID) };
-
-        Cursor cursor = db.rawQuery(queryString, whereArgs);
-
-        if (cursor.getCount() > 0) {
-            while(cursor.moveToNext()) {
-                itemCount = cursor.getInt(0);
-            }
-        }
-
-        db.close();
 
         return itemCount;
     }
 
-    public List<ObjectTO> getItems(long groupID) {
+    public List<IObjectTO> getItems(long groupID) {
 
-        List<ObjectTO> objects = new ArrayList<>();
-        String[] columns = DBContract.Item.getColumnNames();
-        String whereClause = DBContract.Item.ID_GROUP + " = ? ";
-        String[] whereArgs = new String[] { String.valueOf(groupID) };
-        String orderBy = DBContract.Item.ID;
-
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        Cursor cursor = db.query(
-                DBContract.Item.TABLE_NAME,
-                columns,
-                whereClause,
-                whereArgs,
-                null,
-                null,
-                orderBy);
-
-        if (cursor.getCount() > 0) {
-            while(cursor.moveToNext()) {
-                Item object = new Item();
-
-                object.setID(cursor.getInt(cursor.getColumnIndex(DBContract.Item.ID)));
-                object.setGroupID(cursor.getInt(cursor.getColumnIndex(DBContract.Item.ID_GROUP)));
-                object.setName(cursor.getString(cursor.getColumnIndex(DBContract.Item.NAME)));
-                object.setDate(cursor.getString(cursor.getColumnIndex(DBContract.Item.DATE)));
-                object.setWeekdays(cursor.getInt(cursor.getColumnIndex(DBContract.Item.WEEKDAYS)));
-                object.setHour(cursor.getInt(cursor.getColumnIndex(DBContract.Item.HOUR)));
-                object.setMinute(cursor.getInt(cursor.getColumnIndex(DBContract.Item.MINUTE)));
-                object.setActive(cursor.getInt(cursor.getColumnIndex(DBContract.Item.IS_ACTIVE)) != 0);
-                object.setTriggered(cursor.getInt(cursor.getColumnIndex(DBContract.Item.IS_TRIGGERED)) != 0);
-
-                objects.add(object);
-            }
-        }
-
-        db.close();
+        List<IObjectTO> objects = new ArrayList<>();
 
         return objects;
-
     }
 
     @Override
-    public ObjectTO select(int ID) {
+    public IObjectTO select(String ID) {
         return null;
     }
 
     @Override
-    public void delete(int ID) {
+    public void delete(String ID) {
 
     }
 }
