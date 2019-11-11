@@ -1,20 +1,19 @@
-package android.com.br.dummyreminder.activitystates;
+package android.com.br.dummyreminder.activitystates.group;
 
 import android.app.Activity;
 import android.com.br.dummyreminder.ItemDetail;
 import android.com.br.dummyreminder.R;
-import android.com.br.dummyreminder.activitystates.ActivityState;
 import android.com.br.dummyreminder.database.GroupDAO;
 import android.com.br.dummyreminder.to.Group;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class GroupNewState extends GroupState {
 
     public GroupNewState(Activity context) {
-        super(context);
+        super(context, null);
+        super._txtName.requestFocus();
     }
 
     @Override
@@ -47,16 +46,19 @@ public class GroupNewState extends GroupState {
 
     @Override
     public boolean save() {
-        if (!super.validateFields()) {
-            return false;
+        try {
+            if (!super.validateFields()) return false;
+
+            GroupDAO dao = new GroupDAO();
+
+            super._groupTO = new Group(this._txtName.getText().toString(), true);
+            dao.insert(super._groupTO);
+
+            return true;
+        } catch (Exception ex) {
+            Log.e("Group.Save", ex.getMessage());
+            Log.e("Group.Save", ex.getStackTrace().toString());
         }
-
-        GroupDAO dao = new GroupDAO(super._context.getBaseContext());
-
-        super._groupTO = new Group(0, this._txtName.getText().toString(), true);
-        super._groupTO.setID(dao.insert(super._groupTO));
-
-        dao.close();
-        return true;
+        return false;
     }
 }

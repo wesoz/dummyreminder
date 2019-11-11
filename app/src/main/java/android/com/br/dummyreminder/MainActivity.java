@@ -4,6 +4,7 @@ import android.com.br.dummyreminder.adapter.GroupAdapter;
 import android.com.br.dummyreminder.database.GroupDAO;
 import android.com.br.dummyreminder.to.Group;
 import android.com.br.dummyreminder.to.IObjectTO;
+import android.com.br.dummyreminder.to.ObjectTO;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -26,7 +27,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<IObjectTO> groups;
+    private List<ObjectTO> groups;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(mainToolBar);
         Stitch.initializeDefaultAppClient(getResources().getString(R.string.my_app_id));
-
-        Log.d("Mongo", id.toString());
-
     }
 
     @Override
@@ -83,10 +81,9 @@ public class MainActivity extends AppCompatActivity {
     private void setupListView() {
         ListView lstGroups = findViewById(R.id.lstGroups);
 
-        GroupDAO dao = new GroupDAO(getBaseContext());
+        GroupDAO dao = new GroupDAO();
 
         this.groups = dao.select();
-        dao.close();
 
         GroupAdapter adapter = new GroupAdapter(this, this.groups);
 
@@ -96,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 Group group = (Group)groups.get(position);
-                Toast.makeText(parent.getContext(), group.getName(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, GroupDetail.class);
                 intent.putExtra("group", group);
                 startActivity(intent);

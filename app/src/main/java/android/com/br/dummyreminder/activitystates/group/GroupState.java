@@ -1,8 +1,9 @@
-package android.com.br.dummyreminder.activitystates;
+package android.com.br.dummyreminder.activitystates.group;
 
 import android.app.Activity;
 import android.com.br.dummyreminder.ItemDetail;
 import android.com.br.dummyreminder.R;
+import android.com.br.dummyreminder.activitystates.ActivityState;
 import android.com.br.dummyreminder.to.Group;
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
@@ -14,10 +15,11 @@ public abstract class GroupState extends ActivityState {
     TextView _txtName;
     Toolbar _mainToolBar;
 
-    public GroupState(Activity context) {
+    public GroupState(Activity context, Group groupTO) {
         super(context);
         this._txtName = super._context.findViewById(R.id.txtName_Group);
         this._mainToolBar = super._context.findViewById(R.id.group_detail_toolbar);
+        this._groupTO = groupTO;
     }
 
     public void add() {
@@ -29,7 +31,8 @@ public abstract class GroupState extends ActivityState {
     boolean validateFields() {
 
         if (this._txtName.getText().toString().trim().isEmpty()) {
-            this._txtName.setError("Required");
+            this._txtName.setError(super._context.getString(R.string.Required));
+            this._txtName.requestFocus();
             return false;
         }
 

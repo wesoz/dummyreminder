@@ -1,4 +1,4 @@
-package android.com.br.dummyreminder.activitystates;
+package android.com.br.dummyreminder.activitystates.group;
 
 import android.app.Activity;
 import android.com.br.dummyreminder.ItemDetail;
@@ -21,8 +21,7 @@ public class GroupViewState extends GroupState {
 
 
     public GroupViewState(Activity context, Group groupTO) {
-        super(context);
-        super._groupTO = groupTO;
+        super(context, groupTO);
         this.onCreate();
     }
 
@@ -45,7 +44,7 @@ public class GroupViewState extends GroupState {
     private void setupListView() {
         ListView lstGroupItems = super._context.findViewById(R.id.lstGroupItems);
 
-        GroupDAO dao = new GroupDAO(super._context.getBaseContext());
+        GroupDAO dao = new GroupDAO();
         final List<IObjectTO> items = dao.getItems(super._groupTO.getID());
 
         ItemAdapter adapter = new ItemAdapter(super._context, items);
@@ -76,7 +75,7 @@ public class GroupViewState extends GroupState {
         if (!super.validateFields())
             return false;
 
-        GroupDAO dao = new GroupDAO(super._context.getBaseContext());
+        GroupDAO dao = new GroupDAO();
         super._groupTO.setName(super._txtName.getText().toString());
         super._groupTO.setActive(true);
         dao.update(super._groupTO);

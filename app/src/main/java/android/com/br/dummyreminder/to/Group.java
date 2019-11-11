@@ -1,70 +1,82 @@
 package android.com.br.dummyreminder.to;
 
+import android.com.br.dummyreminder.Utils;
+import android.com.br.dummyreminder.database.GroupDAO;
+
 import org.bson.Document;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.util.Date;
+import java.util.List;
 
 public class Group extends ObjectTO implements IObjectTO, Serializable {
 
-    private String ID;
-    private String name;
-    private boolean isActive;
-    private ZonedDateTime CreationDate;
+    private String _ID;
+    private String _name;
+    private boolean _isActive;
+    private Date _creationDate;
+
+    private List<Item> _items;
 
     public Group() {}
 
+    public Group(String ID, String name, boolean isActive, Date creationDate) {
+        this(name, isActive, creationDate);
+        this._ID = ID;
+    }
+
+    public Group(String name, boolean isActive, Date creationDate) {
+
+        this(name, isActive);
+        this._creationDate = creationDate;
+    }
+
+    public Group(String name, boolean isActive) {
+
+        this._ID = null;
+        this._name = name;
+        this._isActive = isActive;
+        this._creationDate = Utils.now();
+    }
+
     public Group(String ID, String name, boolean isActive) {
-        this.ID = ID;
-        this.name = name;;
-        this.isActive = isActive;
-        this.CreationDate = ZonedDateTime.now();
+        this(name, isActive);
+        this._ID = ID;
     }
 
     public String getID() {
-        return ID;
+        return _ID;
     }
 
+    public List<Item> getItems() { return _items; }
 
-    @Override
-    public Document toDocument(boolean includeID) {
-        Document newDocument = new Document();
-        if (includeID && this.ID != null)
-            newDocument.put("_id", super.getObjectId());
-
-        newDocument.put("name", this.getName());
-        newDocument.put("isActive", this.isActive());
-        if (this.CreationDate == null)
-            this.CreationDate = ZonedDateTime.now();
-        newDocument.put("CreationDate", this.getCreationDate());
-        return newDocument;
-    }
+    public void setItems(List<Item> _items) { this._items = _items; }
 
     public void setID(String ID) {
-        this.ID = ID;
+        this._ID = ID;
     }
 
     public String getName() {
-        return name;
+        return _name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this._name = name;
     }
 
     public boolean isActive() {
-        return isActive;
+        return _isActive;
     }
 
     public void setActive(boolean active) {
-        this.isActive = active;
+        this._isActive = active;
     }
 
-    public ZonedDateTime getCreationDate() {
-        return CreationDate;
+    public Date getCreationDate() {
+        return _creationDate;
     }
 
-    public void setCreationDate(ZonedDateTime creationDate) {
-        this.CreationDate = creationDate;
+    public void setCreationDate(Date creationDate) {
+        this._creationDate = creationDate;
     }
 }

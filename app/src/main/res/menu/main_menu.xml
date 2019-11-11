@@ -5,7 +5,7 @@
         android:id="@+id/tb_button_new"
         android:icon="@drawable/button_add_icon"
         android:title="@string/add_group"
-        app:showAsAction="withText"></item>
+        app:showAsAction="ifRoom"></item>
 
     <item
         android:id="@+id/tb_button_test"

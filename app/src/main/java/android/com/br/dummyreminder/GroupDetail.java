@@ -1,11 +1,10 @@
 package android.com.br.dummyreminder;
 
 import android.com.br.dummyreminder.activitystates.ActivityState;
-import android.com.br.dummyreminder.activitystates.GroupViewState;
-import android.com.br.dummyreminder.activitystates.GroupNewState;
+import android.com.br.dummyreminder.activitystates.group.GroupViewState;
+import android.com.br.dummyreminder.activitystates.group.GroupNewState;
 import android.com.br.dummyreminder.to.Group;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;

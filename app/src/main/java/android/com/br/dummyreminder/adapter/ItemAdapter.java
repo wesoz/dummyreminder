@@ -37,7 +37,7 @@ public class ItemAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return ((Item)this.items.get(position)).getID();
+        return 0;//((Item)this.items.get(position)).getID();
     }
 
     @Override
@@ -58,9 +58,8 @@ public class ItemAdapter extends BaseAdapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 item.setActive(isChecked);
-                ItemDAO dao = new ItemDAO(ItemAdapter.this.context);
+                ItemDAO dao = new ItemDAO();
                 dao.update(item);
-                dao.close();
             }
         });
 

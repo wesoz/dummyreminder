@@ -4,6 +4,7 @@ import android.com.br.dummyreminder.R;
 import android.com.br.dummyreminder.database.GroupDAO;
 import android.com.br.dummyreminder.to.Group;
 import android.com.br.dummyreminder.to.IObjectTO;
+import android.com.br.dummyreminder.to.ObjectTO;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +16,10 @@ import java.util.List;
 
 public class GroupAdapter extends BaseAdapter {
 
-    private final List<IObjectTO> groups;
+    private final List<ObjectTO> groups;
     private final Context context;
 
-    public GroupAdapter(Context context, List<IObjectTO> groups) {
+    public GroupAdapter(Context context, List<ObjectTO> groups) {
         this.context = context;
         this.groups = groups;
     }
@@ -35,7 +36,7 @@ public class GroupAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return ((Group)this.groups.get(position)).getID();
+        return position;//((Group)this.groups.get(position)).getID();
     }
 
     @Override
@@ -43,7 +44,7 @@ public class GroupAdapter extends BaseAdapter {
 
         Group group = (Group) this.groups.get(position);
 
-        GroupDAO dao = new GroupDAO(this.context);
+        GroupDAO dao = new GroupDAO();
         int itemCount = dao.getItemCount(group.getID());
 
         LayoutInflater inflater = LayoutInflater.from(this.context);
