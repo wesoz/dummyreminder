@@ -2,6 +2,7 @@ package android.com.br.dummyreminder.to;
 
 import android.com.br.dummyreminder.Utils;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,9 +45,25 @@ public class Group extends ObjectTO implements IObjectTO, Serializable {
         return _ID;
     }
 
-    public List<Item> getItems() { return _items; }
+    public List<Item> getItems() {
+        if (this._items == null)
+            this._items = new ArrayList<>();
+        return this._items;
+    }
 
-    public void setItems(List<Item> _items) { this._items = _items; }
+    public void addItem(Item item) {
+        if (this._items == null)
+            this._items = new ArrayList<>();
+
+        int index = this._items.indexOf(item);
+        if (index > -1){
+            this._items.remove(index);
+            this._items.add(index, item) ;
+        }
+        else
+            this._items.add(item) ;
+    }
+    public void setItems(List<Item> items) { this._items = items; }
 
     public void setID(String ID) {
         this._ID = ID;

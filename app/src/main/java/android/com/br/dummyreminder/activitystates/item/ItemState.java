@@ -1,9 +1,12 @@
 package android.com.br.dummyreminder.activitystates.item;
 
 import android.app.Activity;
+import android.com.br.dummyreminder.ItemDetail;
 import android.com.br.dummyreminder.R;
 import android.com.br.dummyreminder.activitystates.ActivityState;
+import android.com.br.dummyreminder.to.Group;
 import android.com.br.dummyreminder.to.Item;
+import android.content.Intent;
 import android.widget.CheckBox;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -11,6 +14,7 @@ import android.widget.TimePicker;
 
 public abstract class ItemState extends ActivityState {
 
+    protected Group _groupTO;
     protected Item _itemTO;
     protected TextView _txtName;
     protected CheckBox _chkSunday;
@@ -54,6 +58,11 @@ public abstract class ItemState extends ActivityState {
         );
 
         this._itemTO = itemTO;
+    }
+
+    public void onCreate(){
+        Intent intent = this._context.getIntent();
+        this._groupTO = (Group)intent.getSerializableExtra("group");
     }
 
     protected void updateObjectTO() {

@@ -1,12 +1,15 @@
 package android.com.br.dummyreminder.to;
 
 import android.com.br.dummyreminder.Utils;
+
+import org.bson.types.ObjectId;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class Item extends ObjectTO implements IObjectTO, Serializable {
 
-    public Item() { }
+    public Item() { this.setID(new ObjectId().toString()); }
 
     private String _ID;
     private String _name;
@@ -113,5 +116,14 @@ public class Item extends ObjectTO implements IObjectTO, Serializable {
 
     public void setCreationDate(Date creationDate) {
         this._creationDate = creationDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        Item item = (Item)o;
+        if (item.getID() == null) return false;
+        if (this.getID() == null) return false;
+        return this.getID().equals(item.getID());
     }
 }

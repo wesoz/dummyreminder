@@ -30,7 +30,7 @@ public class ItemDetail extends AppCompatActivity {
         } else {
             this._itemState = new ItemNewState(this);
         }
-
+        this._itemState.onCreate();
         Toolbar itemDetailToolbar = findViewById(R.id.item_detail_toolbar);
         setSupportActionBar(itemDetailToolbar);
     }

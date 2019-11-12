@@ -55,7 +55,7 @@ public abstract class ObjectDAO implements IObjectDAO {
     public int update(ObjectTO object) {
 
         Document query = new Document();
-        query.append("_id", object.getObjectId().toString());
+        query.append("_id", object.getObjectId());
         Document update = new Document();
         update.append("$set", this.toDocument(object, false));
 

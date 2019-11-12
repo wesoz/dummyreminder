@@ -36,7 +36,7 @@ public class GroupDAO extends ObjectDAO implements IObjectDAO {
             List<Document> itemDocuments = new ArrayList<>();
             ItemDAO itemDAO = new ItemDAO();
             for (Item item : groupTO.getItems()) {
-                itemDocuments.add(itemDAO.toDocument(item, false));
+                itemDocuments.add(itemDAO.toDocument(item, true));
             }
             newDocument.put("items", itemDocuments);
         }
@@ -72,8 +72,7 @@ public class GroupDAO extends ObjectDAO implements IObjectDAO {
 
     public List<IObjectTO> getItems(String groupID) {
 
-        List<IObjectTO> objects = new ArrayList<>();
-
-        return objects;
+        Group group = (Group)this.select(groupID);
+        return (ArrayList)group.getItems();
     }
 }

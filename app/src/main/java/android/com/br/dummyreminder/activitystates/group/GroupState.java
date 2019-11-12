@@ -24,7 +24,7 @@ public abstract class GroupState extends ActivityState {
 
     public void add() {
         Intent intent = new Intent(super._context, ItemDetail.class);
-        intent.putExtra("groupID", this._groupTO.getID());
+        intent.putExtra("group", this._groupTO);
         super._context.startActivity(intent);
     }
 
