@@ -1,6 +1,5 @@
 package android.com.br.dummyreminder.database;
 
-import android.com.br.dummyreminder.to.IObjectTO;
 import android.com.br.dummyreminder.to.ObjectTO;
 
 import org.bson.Document;

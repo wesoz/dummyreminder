@@ -3,7 +3,6 @@ package android.com.br.dummyreminder.adapter;
 import android.com.br.dummyreminder.R;
 import android.com.br.dummyreminder.database.GroupDAO;
 import android.com.br.dummyreminder.to.Group;
-import android.com.br.dummyreminder.to.IObjectTO;
 import android.com.br.dummyreminder.to.ObjectTO;
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -1,19 +1,14 @@
 package android.com.br.dummyreminder.database;
 
-import android.com.br.dummyreminder.to.IObjectTO;
 import android.com.br.dummyreminder.to.ObjectTO;
-
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.result.DeleteResult;
 import com.mongodb.stitch.android.core.Stitch;
 import com.mongodb.stitch.android.core.StitchAppClient;
 import com.mongodb.stitch.android.services.mongodb.local.LocalMongoDbService;
-
 import org.bson.Document;
 import org.bson.types.ObjectId;
-
 import java.util.ArrayList;
 import java.util.List;
 

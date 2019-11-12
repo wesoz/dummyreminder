@@ -1,10 +1,6 @@
 package android.com.br.dummyreminder.to;
 
 import android.com.br.dummyreminder.Utils;
-import android.com.br.dummyreminder.database.GroupDAO;
-
-import org.bson.Document;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;

@@ -3,7 +3,6 @@ package android.com.br.dummyreminder;
 import android.com.br.dummyreminder.activitystates.ActivityState;
 import android.com.br.dummyreminder.activitystates.item.ItemNewState;
 import android.com.br.dummyreminder.activitystates.item.ItemViewState;
-import android.com.br.dummyreminder.database.ItemDAO;
 import android.com.br.dummyreminder.to.Item;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -12,12 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
 public class ItemDetail extends AppCompatActivity {
 
@@ -59,7 +52,6 @@ public class ItemDetail extends AppCompatActivity {
                 return true;
 
             case R.id.tb_button_cancel:
-                Toast.makeText(this, "Cancel", Toast.LENGTH_SHORT).show();
                 this.finish();
 
                 return true;

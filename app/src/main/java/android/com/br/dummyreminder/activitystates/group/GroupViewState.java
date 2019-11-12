@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -71,7 +70,6 @@ public class GroupViewState extends GroupState {
 
     @Override
     public boolean save() {
-        Toast.makeText(super._context, "Save", Toast.LENGTH_SHORT).show();
         if (!super.validateFields())
             return false;
 

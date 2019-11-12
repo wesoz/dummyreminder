@@ -3,7 +3,6 @@ package android.com.br.dummyreminder;
 import android.com.br.dummyreminder.adapter.GroupAdapter;
 import android.com.br.dummyreminder.database.GroupDAO;
 import android.com.br.dummyreminder.to.Group;
-import android.com.br.dummyreminder.to.IObjectTO;
 import android.com.br.dummyreminder.to.ObjectTO;
 import android.content.Intent;
 import android.media.Ringtone;
@@ -11,14 +10,12 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
 import com.mongodb.stitch.android.core.Stitch;
@@ -57,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.tb_button_new:
-                Toast.makeText(this, "New Group", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this, GroupDetail.class));
 
                 return true;
