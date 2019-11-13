@@ -13,8 +13,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
@@ -25,6 +23,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private List<Group> groups;
+    Uri notification;
+    Ringtone r;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar mainToolBar = findViewById(R.id.mainToolBar);
 
         setSupportActionBar(mainToolBar);
+        notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        r = RingtoneManager.getRingtone(getApplicationContext(), notification);
         Stitch.initializeDefaultAppClient(getResources().getString(R.string.my_app_id));
     }
 
@@ -60,9 +62,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.tb_button_test:
 
                 try {
-                    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-                    Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-                    r.play();
+                    if (r.isPlaying())
+                        r.stop();
+                    else
+                        r.play();
 
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -55,7 +55,8 @@ public class ItemDAO extends MongoDAO {
         Document query = new Document();
         query.append("_id", new ObjectId(groupID));
         Document update = new Document();
-        update.append("$push", this.toDocument(item, true));
+        Document itemDocument = new Document(GroupDAO.FIELD_ITEMS, this.toDocument(item, true));
+        update.append("$push", itemDocument);
 
         try {
             super.getCollection().updateOne(query, update);

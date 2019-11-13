@@ -5,6 +5,7 @@ import android.com.br.dummyreminder.database.ItemDAO;
 import android.com.br.dummyreminder.to.Item;
 import android.com.br.dummyreminder.to.IObjectTO;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,20 +49,19 @@ public class ItemAdapter extends BaseAdapter {
         LayoutInflater inflater = LayoutInflater.from(this.context);
         View view = inflater.inflate(R.layout.item_list_item, null);
 
-        String itemTime =  item.getHour() + ":" + item.getMinute();
+        String itemTime = item.getFormattedTime();
 
         ((TextView) view.findViewById(R.id.item_name)).setText(item.getName());
         ((TextView) view.findViewById(R.id.item_detail)).setText(itemTime);
         Switch swActive = view.findViewById(R.id.item_swActive);
         swActive.setChecked(item.isActive());
-        swActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        swActive.setOnCheckedChangeListener((buttonView, isChecked) ->
+            {
                 item.setActive(isChecked);
                 ItemDAO dao = new ItemDAO();
                 dao.update(item);
             }
-        });
+        );
 
         return view;
     }

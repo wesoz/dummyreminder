@@ -101,15 +101,9 @@ public abstract class ItemState extends ActivityState {
 
     boolean validateFields() {
 
-        if (this._txtName.getText().toString().trim().isEmpty()) {
-            this._txtName.setError(super._context.getString(R.string.Required));
-            this._txtName.requestFocus();
-            return false;
-        }
-
         if (this._swActive.isChecked()) {
             if (this.getBitwiseValue() == 0) {
-                this._swActive.setError("AAA");
+                this._swActive.setChecked(false);
                 return false;
             }
         }

@@ -5,11 +5,15 @@ import android.com.br.dummyreminder.Utils;
 import org.bson.types.ObjectId;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 
-public class Item extends ObjectTO implements IObjectTO, Serializable {
+public class Item extends ObjectTO implements IObjectTO, Serializable, Comparator<Item> {
 
-    public Item() { this.setID(new ObjectId().toString()); }
+    public Item() {
+        this.setID(new ObjectId().toString());
+        this.setCreationDate(Utils.now());
+    }
 
     private String _ID;
     private String _name;
@@ -116,6 +120,17 @@ public class Item extends ObjectTO implements IObjectTO, Serializable {
 
     public void setCreationDate(Date creationDate) {
         this._creationDate = creationDate;
+    }
+
+    public String getFormattedTime() {
+        String hour = "00" + this.getHour();
+        String minute = "00" + this.getMinute();
+        return hour.substring(hour.length() - 2) + ":" + minute.substring(minute.length() - 2);
+    }
+
+    @Override
+    public int compare(Item o1, Item o2) {
+        return (o1.getHour() + o1.getMinute()) - (o2.getHour() + o2.getMinute());
     }
 
     @Override

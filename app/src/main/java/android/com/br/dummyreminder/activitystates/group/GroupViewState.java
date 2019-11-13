@@ -7,13 +7,13 @@ import android.com.br.dummyreminder.adapter.ItemAdapter;
 import android.com.br.dummyreminder.database.GroupDAO;
 import android.com.br.dummyreminder.to.Group;
 import android.com.br.dummyreminder.to.Item;
-import android.com.br.dummyreminder.to.IObjectTO;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class GroupViewState extends GroupState {
@@ -51,14 +51,18 @@ public class GroupViewState extends GroupState {
 
         GroupDAO dao = new GroupDAO();
         final List<Item> items = dao.getItems(super._groupTO.getID());
-
+        Collections.sort(items, new Comparator<Item>() {
+            @Override
+            public int compare(Item o1, Item o2) {
+                return (o1.getHour() + o1.getMinute()) - (o2.getHour() + o2.getMinute());
+            }
+        });
         ItemAdapter adapter = new ItemAdapter(super._context, items);
 
         lstGroupItems.setAdapter(adapter);
 
-        lstGroupItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView parent, View view, int position, long id) {
+        lstGroupItems.setOnItemClickListener((parent, view, position, id) ->
+            {
                 Item itemTO = (Item)items.get(position);
 
                 Intent intent = new Intent(GroupViewState.super._context, ItemDetail.class);
@@ -66,7 +70,7 @@ public class GroupViewState extends GroupState {
                 intent.putExtra("item", itemTO);
                 GroupViewState.super._context.startActivity(intent);
             }
-        });
+        );
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

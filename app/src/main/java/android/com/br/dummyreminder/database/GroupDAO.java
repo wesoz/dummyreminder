@@ -18,6 +18,7 @@ public class GroupDAO extends MongoDAO {
     public static String FIELD_NAME = "name";
     public static String FIELD_ISACTIVE = "isActive";
     public static String FIELD_CREATIONDATE = "CreationDate";
+    public static String FIELD_ITEMS = "items";
 
     public GroupDAO () { }
 
@@ -39,7 +40,7 @@ public class GroupDAO extends MongoDAO {
             for (Item item : groupTO.getItems()) {
                 itemDocuments.add(itemDAO.toDocument(item, true));
             }
-            newDocument.put("items", itemDocuments);
+            newDocument.put(GroupDAO.FIELD_ITEMS, itemDocuments);
         }
         return newDocument;
     }
@@ -47,11 +48,11 @@ public class GroupDAO extends MongoDAO {
     @Override
     public ObjectTO fromDocument(Document document) {
         Group group = new Group(document.getObjectId("_id").toString(),
-                document.getString(FIELD_NAME),
-                document.getBoolean(FIELD_ISACTIVE),
-                document.getDate(FIELD_CREATIONDATE));
+                document.getString(GroupDAO.FIELD_NAME),
+                document.getBoolean(GroupDAO.FIELD_ISACTIVE),
+                document.getDate(GroupDAO.FIELD_CREATIONDATE));
 
-        List<Document> itemDocuments = (List<Document>)document.get("items");
+        List<Document> itemDocuments = (List<Document>)document.get(GroupDAO.FIELD_ITEMS);
         List<Item> items = new ArrayList<>();
         if (itemDocuments != null) {
             ItemDAO itemDAO = new ItemDAO();
