@@ -2,9 +2,12 @@ package android.com.br.dummyreminder.database;
 
 import android.com.br.dummyreminder.to.Item;
 import android.com.br.dummyreminder.to.ObjectTO;
-import org.bson.Document;
+import android.util.Log;
 
-public class ItemDAO extends ObjectDAO implements IObjectDAO {
+import org.bson.Document;
+import org.bson.types.ObjectId;
+
+public class ItemDAO extends MongoDAO {
 
     public static String FIELD_NAME = "name";
     public static String FIELD_DATE = "date";
@@ -14,10 +17,6 @@ public class ItemDAO extends ObjectDAO implements IObjectDAO {
     public static String FIELD_ISACTIVE = "isActive";
     public static String FIELD_ISTRIGGERED = "isTriggered";
     public static String FIELD_CREATIONDATE = "CreationDate";
-
-    public ItemDAO() {
-        super("Item");
-    }
 
     @Override
     public Document toDocument(ObjectTO objectTO, boolean includeID) {
@@ -50,5 +49,22 @@ public class ItemDAO extends ObjectDAO implements IObjectDAO {
                 document.getBoolean(FIELD_ISTRIGGERED),
                 document.getDate(FIELD_CREATIONDATE)
             );
+    }
+
+    public void insert(String groupID, Item item) {
+        Document query = new Document();
+        query.append("_id", new ObjectId(groupID));
+        Document update = new Document();
+        update.append("$push", this.toDocument(item, true));
+
+        try {
+            super.getCollection().updateOne(query, update);
+        } catch (Exception ex) {
+            Log.e("InsertItem", ex.getMessage());
+        }
+    }
+
+    public int update(ObjectTO object){
+        return 1;
     }
 }

@@ -17,10 +17,10 @@ import java.util.List;
 
 public class ItemAdapter extends BaseAdapter {
 
-    private final List<IObjectTO> items;
+    private final List<Item> items;
     private final Context context;
 
-    public ItemAdapter(Context context, List<IObjectTO> items) {
+    public ItemAdapter(Context context, List<Item> items) {
         this.context = context;
         this.items = items;
     }
@@ -43,7 +43,7 @@ public class ItemAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        final Item item = (Item) this.items.get(position);
+        final Item item = this.items.get(position);
 
         LayoutInflater inflater = LayoutInflater.from(this.context);
         View view = inflater.inflate(R.layout.item_list_item, null);

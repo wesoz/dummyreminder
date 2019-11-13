@@ -37,14 +37,20 @@ public class GroupViewState extends GroupState {
 
     @Override
     public void onResume() {
+        this.updateObjectTO();
         this.setupListView();
+    }
+
+    private void updateObjectTO() {
+        GroupDAO dao = new GroupDAO();
+        super._groupTO = dao.select(super._groupTO.getID());
     }
 
     private void setupListView() {
         ListView lstGroupItems = super._context.findViewById(R.id.lstGroupItems);
 
         GroupDAO dao = new GroupDAO();
-        final List<IObjectTO> items = dao.getItems(super._groupTO.getID());
+        final List<Item> items = dao.getItems(super._groupTO.getID());
 
         ItemAdapter adapter = new ItemAdapter(super._context, items);
 

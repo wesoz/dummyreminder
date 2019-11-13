@@ -33,12 +33,11 @@ public class ItemNewState extends ItemState {
     public boolean save() {
         if (!super.validateFields()) return false;
 
-        GroupDAO dao = new GroupDAO();
-
+        ItemDAO dao = new ItemDAO();
         super._itemTO = new Item();
         this.updateObjectTO();
         super._groupTO.addItem(this._itemTO);
-        dao.update(super._groupTO);
+        dao.insert(super._groupTO.getID(), super._itemTO);
 
         return true;
     }

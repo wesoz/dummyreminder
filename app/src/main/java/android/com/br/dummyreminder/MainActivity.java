@@ -24,7 +24,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<ObjectTO> groups;
+    private List<Group> groups;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,14 +85,14 @@ public class MainActivity extends AppCompatActivity {
 
         lstGroups.setAdapter(adapter);
 
-        lstGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView parent, View view, int position, long id) {
+        lstGroups.setOnItemClickListener((parent, view, position, id) ->
+             {
                 Group group = (Group)groups.get(position);
                 Intent intent = new Intent(MainActivity.this, GroupDetail.class);
                 intent.putExtra("group", group);
                 startActivity(intent);
+
             }
-        });
+        );
     }
 }

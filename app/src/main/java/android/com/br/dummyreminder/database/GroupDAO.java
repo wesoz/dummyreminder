@@ -2,25 +2,26 @@ package android.com.br.dummyreminder.database;
 
 import android.com.br.dummyreminder.Utils;
 import android.com.br.dummyreminder.to.Group;
-import android.com.br.dummyreminder.to.IObjectTO;
 import android.com.br.dummyreminder.to.Item;
 import android.com.br.dummyreminder.to.ObjectTO;
 
+import com.mongodb.client.FindIterable;
+
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupDAO extends ObjectDAO implements IObjectDAO {
+public class GroupDAO extends MongoDAO {
 
     public static String FIELD_NAME = "name";
     public static String FIELD_ISACTIVE = "isActive";
     public static String FIELD_CREATIONDATE = "CreationDate";
 
-    public GroupDAO () {
-        super("Group");
-    }
+    public GroupDAO () { }
 
+    @Override
     public Document toDocument(ObjectTO objectTO, boolean includeID) {
         Group groupTO = (Group)objectTO;
         Document newDocument = new Document();
@@ -62,17 +63,52 @@ public class GroupDAO extends ObjectDAO implements IObjectDAO {
         return group;
     }
 
-    public int getItemCount(String groupID) {
-
-
-        int itemCount = 0;
-
-        return itemCount;
+    public List<Item> getItems(String groupID) {
+        Group group = this.select(groupID);
+        return group.getItems();
     }
 
-    public List<IObjectTO> getItems(String groupID) {
+    public List<Group> select() {
 
-        Group group = (Group)this.select(groupID);
-        return (ArrayList)group.getItems();
+        List<Group> objects = new ArrayList<>();
+
+        FindIterable<Document> documents = super.getCollection().find();
+
+        for (Document document : documents) {
+            objects.add((Group)fromDocument(document));
+        }
+
+        return objects;
+    }
+
+    public void insert(Group object) {
+        Document newDocument = this.toDocument(object,false);
+
+        super.getCollection().insertOne(newDocument);
+        object.setID(newDocument.getObjectId("_id").toString());
+    }
+
+    public void update(Group object) {
+
+        Document query = new Document();
+        query.append("_id", object.getObjectId());
+        Document update = new Document();
+        update.append("$set", this.toDocument(object, false));
+
+        super.getCollection().updateOne(query,update);
+    }
+
+    public Group select(String ID) {
+        Document query = new Document();
+        query.append("_id", new ObjectId(ID));
+        FindIterable<Document> documents = super.getCollection().find(query);
+
+        return (Group)fromDocument(documents.first());
+    }
+
+    public void delete(String ID) {
+        Document query = new Document();
+        query.append("_id", new ObjectId(ID));
+        super.getCollection().deleteOne(query);
     }
 }

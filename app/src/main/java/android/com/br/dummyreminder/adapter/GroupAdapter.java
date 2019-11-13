@@ -15,10 +15,10 @@ import java.util.List;
 
 public class GroupAdapter extends BaseAdapter {
 
-    private final List<ObjectTO> groups;
+    private final List<Group> groups;
     private final Context context;
 
-    public GroupAdapter(Context context, List<ObjectTO> groups) {
+    public GroupAdapter(Context context, List<Group> groups) {
         this.context = context;
         this.groups = groups;
     }
@@ -41,10 +41,10 @@ public class GroupAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Group group = (Group) this.groups.get(position);
+        Group group = this.groups.get(position);
 
         GroupDAO dao = new GroupDAO();
-        int itemCount = dao.getItemCount(group.getID());
+        int itemCount = group.getItems().size();
 
         LayoutInflater inflater = LayoutInflater.from(this.context);
         View view = inflater.inflate(R.layout.list_item, null);
