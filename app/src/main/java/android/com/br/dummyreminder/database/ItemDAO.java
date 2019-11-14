@@ -1,11 +1,19 @@
 package android.com.br.dummyreminder.database;
 
+import android.com.br.dummyreminder.to.Group;
 import android.com.br.dummyreminder.to.Item;
 import android.com.br.dummyreminder.to.ObjectTO;
 import android.util.Log;
 
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.UpdateResult;
+
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
+
+import java.util.Date;
 
 public class ItemDAO extends MongoDAO {
 
@@ -58,14 +66,37 @@ public class ItemDAO extends MongoDAO {
         Document itemDocument = new Document(GroupDAO.FIELD_ITEMS, this.toDocument(item, true));
         update.append("$push", itemDocument);
 
-        try {
-            super.getCollection().updateOne(query, update);
-        } catch (Exception ex) {
-            Log.e("InsertItem", ex.getMessage());
-        }
+        super.getCollection().updateOne(query, update);
     }
 
-    public int update(ObjectTO object){
-        return 1;
+    public long update(String groupID, Item item){
+        /*Document query = new Document();
+        query.put("_id", new ObjectId(groupID));
+        query.put("items._id", new ObjectId(item.getID()));
+
+        FindIterable<Document> documents = super.getCollection().find(query);
+
+        for (Document document : documents) {
+            String a = document.getString(GroupDAO.FIELD_NAME) ;
+            boolean b = document.getBoolean(GroupDAO.FIELD_ISACTIVE);
+            Date c =  document.getDate(GroupDAO.FIELD_CREATIONDATE);
+        }*/
+        Bson filter = Filters.and(Filters.eq("_id", new ObjectId(groupID)), Filters.eq("items._id", new ObjectId(item.getID())));
+
+        FindIterable<Document> documents = super.getCollection().find(filter);
+
+        for (Document document : documents) {
+            String a = document.getString(GroupDAO.FIELD_NAME) ;
+            boolean b = document.getBoolean(GroupDAO.FIELD_ISACTIVE);
+            Date c =  document.getDate(GroupDAO.FIELD_CREATIONDATE);
+        }
+
+        Document update = new Document();
+        Document itemDocument = new Document(GroupDAO.FIELD_ITEMS + ".$", this.toDocument(item, false));
+        update.append("$set", itemDocument);
+
+        UpdateResult result = super.getCollection().updateOne(filter, update);
+
+        return result.getModifiedCount();
     }
 }

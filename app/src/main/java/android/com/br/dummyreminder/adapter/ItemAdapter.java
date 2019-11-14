@@ -3,14 +3,11 @@ package android.com.br.dummyreminder.adapter;
 import android.com.br.dummyreminder.R;
 import android.com.br.dummyreminder.database.ItemDAO;
 import android.com.br.dummyreminder.to.Item;
-import android.com.br.dummyreminder.to.IObjectTO;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -18,22 +15,24 @@ import java.util.List;
 
 public class ItemAdapter extends BaseAdapter {
 
-    private final List<Item> items;
-    private final Context context;
+    private final List<Item> _items;
+    private final String _groupID;
+    private final Context _context;
 
-    public ItemAdapter(Context context, List<Item> items) {
-        this.context = context;
-        this.items = items;
+    public ItemAdapter(Context context, String groupID, List<Item> items) {
+        this._context = context;
+        this._items = items;
+        this._groupID = groupID;
     }
 
     @Override
     public int getCount() {
-        return this.items.size();
+        return this._items.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return this.items.get(position);
+        return this._items.get(position);
     }
 
     @Override
@@ -44,9 +43,9 @@ public class ItemAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        final Item item = this.items.get(position);
+        final Item item = this._items.get(position);
 
-        LayoutInflater inflater = LayoutInflater.from(this.context);
+        LayoutInflater inflater = LayoutInflater.from(this._context);
         View view = inflater.inflate(R.layout.item_list_item, null);
 
         String itemTime = item.getFormattedTime();
@@ -59,7 +58,7 @@ public class ItemAdapter extends BaseAdapter {
             {
                 item.setActive(isChecked);
                 ItemDAO dao = new ItemDAO();
-                dao.update(item);
+                dao.update(_groupID, item);
             }
         );
 

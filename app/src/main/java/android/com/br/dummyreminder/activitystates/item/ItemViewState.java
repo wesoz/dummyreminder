@@ -21,21 +21,6 @@ public class ItemViewState extends ItemState {
     }
 
     @Override
-    public void add() {
-
-    }
-
-    @Override
-    public void onCreate() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;
     }
@@ -48,7 +33,7 @@ public class ItemViewState extends ItemState {
 
         this._itemTO = new Item();
         this.updateObjectTO();
-        dao.update(this._itemTO);
+        dao.update(super._groupTO.getID(), super._itemTO);
 
         return true;
     }

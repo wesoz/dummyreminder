@@ -1,7 +1,7 @@
 package android.com.br.dummyreminder.activitystates.group;
 
 import android.app.Activity;
-import android.com.br.dummyreminder.ItemDetail;
+import android.com.br.dummyreminder.ItemDetailActivity;
 import android.com.br.dummyreminder.R;
 import android.com.br.dummyreminder.adapter.ItemAdapter;
 import android.com.br.dummyreminder.database.GroupDAO;
@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.ListView;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class GroupViewState extends GroupState {
@@ -51,22 +50,19 @@ public class GroupViewState extends GroupState {
 
         GroupDAO dao = new GroupDAO();
         final List<Item> items = dao.getItems(super._groupTO.getID());
-        Collections.sort(items, new Comparator<Item>() {
-            @Override
-            public int compare(Item o1, Item o2) {
-                return (o1.getHour() + o1.getMinute()) - (o2.getHour() + o2.getMinute());
-            }
-        });
-        ItemAdapter adapter = new ItemAdapter(super._context, items);
+        Collections.sort(items, (o1, o2) ->
+                Integer.parseInt(String.valueOf(o1.getHour()) + String.valueOf(o1.getMinute())) - Integer.parseInt(String.valueOf(o2.getHour()) + String.valueOf(o2.getMinute()))
+        );
+        ItemAdapter adapter = new ItemAdapter(super._context, super._groupTO.getID(), items);
 
         lstGroupItems.setAdapter(adapter);
 
         lstGroupItems.setOnItemClickListener((parent, view, position, id) ->
             {
-                Item itemTO = (Item)items.get(position);
+                Item itemTO = items.get(position);
 
-                Intent intent = new Intent(GroupViewState.super._context, ItemDetail.class);
-                intent.putExtra("groupID", GroupViewState.super._groupTO.getID());
+                Intent intent = new Intent(GroupViewState.super._context, ItemDetailActivity.class);
+                intent.putExtra("group", GroupViewState.super._groupTO);
                 intent.putExtra("item", itemTO);
                 GroupViewState.super._context.startActivity(intent);
             }

@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class ItemDetail extends AppCompatActivity {
+public class ItemDetailActivity extends AppCompatActivity {
 
     private Item _item;
     private ActivityState _itemState;

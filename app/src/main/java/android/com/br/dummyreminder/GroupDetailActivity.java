@@ -1,6 +1,7 @@
 package android.com.br.dummyreminder;
 
 import android.com.br.dummyreminder.activitystates.ActivityState;
+import android.com.br.dummyreminder.activitystates.group.GroupState;
 import android.com.br.dummyreminder.activitystates.group.GroupViewState;
 import android.com.br.dummyreminder.activitystates.group.GroupNewState;
 import android.com.br.dummyreminder.to.Group;
@@ -12,9 +13,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class GroupDetail extends AppCompatActivity {
+public class GroupDetailActivity extends AppCompatActivity {
 
-    ActivityState _groupState;
+    GroupState _groupState;
     Toolbar _mainToolBar;
 
     @Override

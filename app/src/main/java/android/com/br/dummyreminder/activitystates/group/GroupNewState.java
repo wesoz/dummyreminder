@@ -1,7 +1,7 @@
 package android.com.br.dummyreminder.activitystates.group;
 
 import android.app.Activity;
-import android.com.br.dummyreminder.ItemDetail;
+import android.com.br.dummyreminder.ItemDetailActivity;
 import android.com.br.dummyreminder.R;
 import android.com.br.dummyreminder.database.GroupDAO;
 import android.com.br.dummyreminder.to.Group;
@@ -20,7 +20,7 @@ public class GroupNewState extends GroupState {
     public void add() {
         if (this.save()) {
             super.add();
-            Intent intent = new Intent(super._context, ItemDetail.class);
+            Intent intent = new Intent(super._context, ItemDetailActivity.class);
             intent.putExtra("group", this._groupTO);
             super._context.setResult(0, intent);
         }

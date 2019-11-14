@@ -1,7 +1,6 @@
 package android.com.br.dummyreminder.activitystates.item;
 
 import android.app.Activity;
-import android.com.br.dummyreminder.ItemDetail;
 import android.com.br.dummyreminder.R;
 import android.com.br.dummyreminder.activitystates.ActivityState;
 import android.com.br.dummyreminder.to.Group;
@@ -58,6 +57,14 @@ public abstract class ItemState extends ActivityState {
         );
 
         this._itemTO = itemTO;
+    }
+
+    public void add() {
+
+    }
+
+    public void onResume () {
+
     }
 
     public void onCreate(){

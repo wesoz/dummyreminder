@@ -3,7 +3,6 @@ package android.com.br.dummyreminder;
 import android.com.br.dummyreminder.adapter.GroupAdapter;
 import android.com.br.dummyreminder.database.GroupDAO;
 import android.com.br.dummyreminder.to.Group;
-import android.com.br.dummyreminder.to.ObjectTO;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.tb_button_new:
-                startActivity(new Intent(MainActivity.this, GroupDetail.class));
+                startActivity(new Intent(MainActivity.this, GroupDetailActivity.class));
 
                 return true;
             case R.id.tb_button_test:
@@ -91,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         lstGroups.setOnItemClickListener((parent, view, position, id) ->
              {
                 Group group = (Group)groups.get(position);
-                Intent intent = new Intent(MainActivity.this, GroupDetail.class);
+                Intent intent = new Intent(MainActivity.this, GroupDetailActivity.class);
                 intent.putExtra("group", group);
                 startActivity(intent);
 
